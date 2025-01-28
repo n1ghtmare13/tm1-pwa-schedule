@@ -17,16 +17,16 @@ def fetch_and_save_data():
             response = requests.get(url)
             response.raise_for_status()
             response.encoding = 'utf-8' # Ustawienie UTF-8 dla pobranych danych
+            text = response.text # Pobieramy dane do zmiennej text
 
             if filename == "substitutions.html": # specjalne traktowanie dla strony z zastepstwami
-                soup = BeautifulSoup(response.text, 'html.parser')
+                soup = BeautifulSoup(text, 'html.parser')
                 for meta in soup.find_all('meta', attrs={'http-equiv': 'content-type'}):
                     if 'charset=iso-8859-2' in meta.get('content', '').lower():
-                        response.encoding = 'iso-8859-2'
-                        response.text = response.text.encode('iso-8859-2').decode('utf-8', errors='replace')
+                        text = text.encode('iso-8859-2').decode('utf-8', errors='replace')
 
             with open(filename, "w", encoding="utf-8") as file:
-                file.write(response.text)
+                file.write(text) # zapisujemy zmodyfikowane dane
             print(f"Successfully fetched and saved {filename} at {datetime.now()}")
         except requests.exceptions.RequestException as e:
             print(f"Failed to fetch {url}: {e}")
