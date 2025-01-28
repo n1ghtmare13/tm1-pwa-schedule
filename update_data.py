@@ -15,6 +15,7 @@ def fetch_and_save_data():
         try:
             response = requests.get(url)
             response.raise_for_status()
+            response.encoding = 'utf-8'    
             with open(filename, "w", encoding="utf-8") as file:
                 file.write(response.text)
             print(f"Successfully fetched and saved {filename} at {datetime.now()}")
