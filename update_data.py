@@ -50,9 +50,9 @@ def fetch_and_save_data():
                 # Remove entire <tr> containing table with class 'op'
                 footer_td = soup.find('td', class_='op')
                 if footer_td:
-                    parent_row = footer_table.find_parent('tr')  # Find parent <tr>
-                    if parent_row:
-                        parent_row.decompose()  # Remove the entire <tr>
+                    parent_tr = footer_td.find_parent('tr')  # Znajdź rodzica <tr>
+                    if parent_tr:
+                        parent_tr.extract()  # Całkowicie usuń <tr> z drzewa DOM
                     
                 utf8_meta = soup.new_tag('meta', **{'http-equiv': 'Content-Type', 'content': 'text/html; charset=utf-8'})
                 soup.head.insert(0, utf8_meta)
