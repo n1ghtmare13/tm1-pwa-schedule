@@ -12,24 +12,33 @@ def fetch_and_save_data():
         "substitutions.html": "https://zastepstwa.staff.edu.pl/"
     }
 
-    for filename, url in urls.items():
+for filename, url in urls.items():
         try:
             response = requests.get(url)
             response.raise_for_status()
-            response.encoding = 'utf-8' # Ustawienie UTF-8 dla pobranych danych
-            text = response.text # Pobieramy dane do zmiennej text
+            response.encoding = 'utf-8'  # Ustawiamy kodowanie UTF-8 dla odpowiedzi
+            text = response.text # Pobierz tekst odpowiedzi
 
-            if filename == "substitutions.html": # specjalne traktowanie dla strony z zastepstwami
+            if filename == "substitutions.html":  # specjalne traktowanie dla strony z zastępstwami
                 soup = BeautifulSoup(text, 'html.parser')
-                for meta in soup.find_all('meta', attrs={'http-equiv': 'content-type'}):
-                    if 'charset=iso-8859-2' in meta.get('content', '').lower():
-                        text = text.encode('iso-8859-2').decode('utf-8', errors='replace')
+                # Znajdź tag meta z informacją o kodowaniu
+                meta_tag = soup.find('meta', attrs={'http-equiv': 'content-type'})
 
-            with open(filename, "w", encoding="utf-8") as file:
-                file.write(text) # zapisujemy zmodyfikowane dane
+                if meta_tag:
+                     # Pobierz kodowanie
+                     content = meta_tag.get('content', '').lower()
+                     if 'charset=iso-8859-2' in content:
+                        # Ustaw poprawne kodowanie (iso-8859-2)
+                        text = response.text.encode('iso-8859-2', errors='ignore').decode('utf-8', errors='replace')
+
+
+            with open(filename, "w", encoding="utf-8") as file:  # Zapisz z kodowaniem UTF-8
+                file.write(text)
             print(f"Successfully fetched and saved {filename} at {datetime.now()}")
         except requests.exceptions.RequestException as e:
             print(f"Failed to fetch {url}: {e}")
+        except Exception as e:
+           print(f"An unexpected error occured {e}")
 
 def send_fcm_notification():
     try:
