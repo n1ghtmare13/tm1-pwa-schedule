@@ -47,22 +47,15 @@ def fetch_and_save_data():
                 for tag in soup(['style', 'script', 'link']):
                     tag.decompose()
 
-                # Usuwanie stopki na podstawie treści
-                footer_keywords = ["wygenerowano", "Plan lekcji Optivum", "VULCAN", "Drukuj"] # Słowa kluczowe stopki
-
-                footer_table = None
-                for keyword in footer_keywords:
-                    footer_text_element = soup.find(string=lambda text: keyword in text if text else False) # Dodane sprawdzenie czy text nie jest None
-                    if footer_text_element:
-                        footer_table = footer_text_element.find_parent('table') # Szukamy tabeli rodzica
-                        if footer_table: # Jeśli tabela została znaleziona, przerywamy pętlę
-                            break
-
-                if footer_table:
-                    footer_table.extract() # Usuwamy całą tabelę stopki
-                    print("Stopka usunięta na podstawie treści.")
+                # Usuwanie tabeli z klasą 'tabtytul'
+                footer_table_tabtytul = soup.find('table', class_='tabtytul')
+                if footer_table_tabtytul:
+                    print("Znaleziono tabelę z klasą 'tabtytul'. Usuwam ją.")
+                    footer_table_tabtytul.extract()
+                    print("Usunięto tabelę z klasą 'tabtytul'.")
                 else:
-                    print("Nie znaleziono stopki do usunięcia na podstawie treści.")
+                    print("Nie znaleziono tabeli z klasą 'tabtytul'.")
+                    
                     
                 utf8_meta = soup.new_tag('meta', **{'http-equiv': 'Content-Type', 'content': 'text/html; charset=utf-8'})
                 soup.head.insert(0, utf8_meta)
