@@ -1,55 +1,110 @@
+* {
+  font-family: sans-serif;
+  white-space: normal;
+}
+
 body {
-    font-family: sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    background-color: #f0f0f0;
-    color: #333;
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f0f0f0;
+  color: #333;
 }
 
 header {
-    background-color: #007bff;
-    color: white;
-    text-align: center;
-    padding: 1rem 0;
+  background-color: #007bff;
+  color: white;
+  text-align: center;
+  padding: 1rem 0;
 }
 
 main {
-    flex: 1;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  flex: 1;
+  padding: 10px; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #content {
-    width: 100%;
-    max-width: 900px;
+  width: 100%;
+  max-width: 900px;
 }
 
-#schedule-container, #substitutions-container {
-    background-color: white;
-    padding: 15px;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+#schedule-container,
+#substitutions-container {
+  background-color: white;
+  padding: 10px; 
+  margin-bottom: 15px; 
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  unicode-bidi: embed;
 }
 
-#schedule-container h2, #substitutions-container h2 {
-    margin-top: 0;
+#schedule-container h2,
+#substitutions-container h2 {
+  margin-top: 0;
+  font-size: 1.2em;
 }
 
 #last-update {
-    text-align: right;
-    font-size: 0.8em;
-    color: gray;
+  text-align: right;
+  font-size: 0.7em; 
+  color: gray;
 }
 
 footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 1rem 0;
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 0.8rem 0; 
+  font-size: 0.9em; 
+}
+
+@media (max-width: 768px) {
+  main {
+    padding: 5px;
+  }
+
+  #schedule-container,
+  #substitutions-container {
+    padding: 8px;
+    margin-bottom: 10px;
+  }
+
+    #schedule-container h2,
+  #substitutions-container h2 {
+        font-size: 1.1em;
+  }
+}
+
+#schedule-container table,
+#substitutions-container table {
+  width: 100%;
+  border-collapse: collapse; 
+  margin-top: 10px; 
+}
+
+#schedule-container th,
+#substitutions-container th,
+#schedule-container td,
+#substitutions-container td {
+    border: 1px solid #ddd; 
+    padding: 5px; 
+    text-align: left; 
+    font-size: 0.8em; 
+}
+
+#schedule-container th,
+#substitutions-container th {
+  background-color: #f2f2f2; 
+  font-weight: bold; 
+}
+
+#schedule-container td,
+#substitutions-container td {
+  word-break: break-word; /* Zawijanie długich wyrazów */
 }
