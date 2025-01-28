@@ -8,21 +8,53 @@
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="assets/icon.png">
     <meta name="theme-color" content="#ffffff">
-    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
-    <script>
-        window.OneSignal = window.OneSignal || [];
-        OneSignal.push(function() {
-          OneSignal.init({
-            appId: "YOUR_ONESIGNAL_APP_ID", // Zastąp swoim App ID z OneSignal
-            safari_web_id: "web.onesignal.auto.YOUR_ONESIGNAL_APP_ID", // Zastąp swoim App ID z OneSignal
-            allowLocalhostAsSecureOrigin: true
-          });
-        });
-    </script>
+
+    <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-messaging.js";
+
+    const firebaseConfig = {
+        apiKey: "YOUR_API_KEY", // Zastąp swoim
+        authDomain: "YOUR_AUTH_DOMAIN", // Zastąp swoim
+        projectId: "YOUR_PROJECT_ID", // Zastąp swoim
+        storageBucket: "YOUR_STORAGE_BUCKET", // Zastąp swoim
+        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",  // Zastąp swoim
+        appId: "YOUR_APP_ID"  // Zastąp swoim
+    };
+
+
+    const app = initializeApp(firebaseConfig);
+    const messaging = getMessaging(app);
+
+    async function requestPermission() {
+      const permission = await Notification.requestPermission();
+        if (permission === 'granted') {
+          console.log('Notification permission granted.');
+            const token = await getToken(messaging, { vapidKey: 'YOUR_VAPID_KEY' });
+              if (token){
+                  console.log('FCM registration token:', token);
+                  // Tutaj możesz wysłać token na swój serwer, aby móc go używać do wysyłania notyfikacji
+              } else {
+                console.log('Failed to get token');
+              }
+
+        } else {
+            console.log('Unable to get permission to notify.');
+        }
+      }
+
+      requestPermission();
+
+      onMessage(messaging, (payload) => {
+        console.log('Message received. ', payload);
+        // Customize notification here
+      });
+
+      </script>
 </head>
 <body>
     <header>
-        <h1>Plan Lekcji 3tb</h1>
+        <h1>Plan Lekcji 3TB</h1>
     </header>
     <main>
         <div id="content">
