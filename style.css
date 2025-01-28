@@ -97,27 +97,17 @@ footer {
 #schedule-container td,
 #substitutions-container td {
     border: 1px solid #ddd;
-    padding: 5px;
+    padding: 3px;
     text-align: left;
-    font-size: 0.8em;
+    font-size: 0.7em;
     word-break: break-word;
+    overflow-wrap: break-word;
+    min-width: 80px;
+     max-width: 150px;
 }
 
 #schedule-container th,
 #substitutions-container th {
     background-color: #f2f2f2;
     font-weight: bold;
-}
-
-
-#schedule-container td,
-#substitutions-container td {
-    word-break: break-word;
-    overflow-wrap: break-word;
-}
-
-
-#schedule-container table,
-#substitutions-container table {
-    max-width: 100%;
 }
