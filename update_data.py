@@ -21,10 +21,11 @@ def fetch_and_save_data():
 
             if filename == "substitutions.html":
               soup = BeautifulSoup(text, 'html.parser')
-              meta_tag = soup.find('meta', attrs={'http-equiv': 'content-type'})
-              if meta_tag:
-                  meta_tag.decompose()
-              text = f'<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />{text}'
+              # Usuwamy wszystkie meta tagi z content-type
+              for meta in soup.find_all('meta', attrs={'http-equiv': 'content-type'}):
+                meta.decompose()
+              # Dodajemy na początek sztuczny meta tag z UTF-8
+              text = f'<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />{soup.prettify()}'
 
             with open(filename, "w", encoding="utf-8") as file:
                file.write(text)
