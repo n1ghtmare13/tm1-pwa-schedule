@@ -10,20 +10,22 @@
     <meta name="theme-color" content="#ffffff">
 
     <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-messaging.js";
-
-    const firebaseConfig = {
-        apiKey: "YOUR_API_KEY", // Zastąp swoim
-        authDomain: "YOUR_AUTH_DOMAIN", // Zastąp swoim
-        projectId: "YOUR_PROJECT_ID", // Zastąp swoim
-        storageBucket: "YOUR_STORAGE_BUCKET", // Zastąp swoim
-        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",  // Zastąp swoim
-        appId: "YOUR_APP_ID"  // Zastąp swoim
-    };
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-analytics.js";
+    
+      const firebaseConfig = {
+        apiKey: "AIzaSyAujO6hUv2-G18r132CqP4cvXpGhhOsXa8",
+        authDomain: "tm1-pwa-schedule.firebaseapp.com",
+        projectId: "tm1-pwa-schedule",
+        storageBucket: "tm1-pwa-schedule.firebasestorage.app",
+        messagingSenderId: "39753485339",
+        appId: "1:39753485339:web:995bd4f54267698d883cbe",
+        measurementId: "G-59X84T0KB1"
+      };
 
 
     const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
     const messaging = getMessaging(app);
 
     async function requestPermission() {
