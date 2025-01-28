@@ -32,7 +32,7 @@
       const permission = await Notification.requestPermission();
         if (permission === 'granted') {
           console.log('Notification permission granted.');
-            const token = await getToken(messaging, { vapidKey: 'YOUR_VAPID_KEY' });
+            const token = await getToken(messaging, { vapidKey: 'BKnj72KcT4emaQr974YdMv_AUOsbL5ONL4JdilJE5HyulNbw1L9ldP72HdkrN2ExarSeLhNsruDubVc5ZUq71NY' });
               if (token){
                   console.log('FCM registration token:', token);
                   // Tutaj możesz wysłać token na swój serwer, aby móc go używać do wysyłania notyfikacji
