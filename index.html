@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan i Zastępstwa</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="assets/icon.png">
+    <meta name="theme-color" content="#ffffff">
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+    <script>
+        window.OneSignal = window.OneSignal || [];
+        OneSignal.push(function() {
+          OneSignal.init({
+            appId: "YOUR_ONESIGNAL_APP_ID", // Zastąp swoim App ID z OneSignal
+            safari_web_id: "web.onesignal.auto.YOUR_ONESIGNAL_APP_ID", // Zastąp swoim App ID z OneSignal
+            allowLocalhostAsSecureOrigin: true
+          });
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Plan Lekcji i Zastępstwa</h1>
+    </header>
+    <main>
+        <div id="content">
+            <div id="schedule-container"></div>
+            <div id="substitutions-container"></div>
+        </div>
+        <div id="last-update"></div>
+    </main>
+    <footer>
+        <p>© 2025 Twoja nazwa</p>
+    </footer>
+    <script src="script.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('service-worker.js');
+            });
+        }
+    </script>
+</body>
+</html>
