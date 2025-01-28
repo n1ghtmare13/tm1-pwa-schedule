@@ -1,6 +1,6 @@
 * {
   font-family: sans-serif;
-  white-space: normal;
+  white-space: normal; 
 }
 
 body {
@@ -23,7 +23,7 @@ header {
 
 main {
   flex: 1;
-  padding: 10px; 
+  padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -37,11 +37,12 @@ main {
 #schedule-container,
 #substitutions-container {
   background-color: white;
-  padding: 10px; 
-  margin-bottom: 15px; 
+  padding: 10px;
+  margin-bottom: 15px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   unicode-bidi: embed;
+  overflow-x: auto; 
 }
 
 #schedule-container h2,
@@ -52,7 +53,7 @@ main {
 
 #last-update {
   text-align: right;
-  font-size: 0.7em; 
+  font-size: 0.7em;
   color: gray;
 }
 
@@ -60,51 +61,60 @@ footer {
   background-color: #333;
   color: white;
   text-align: center;
-  padding: 0.8rem 0; 
-  font-size: 0.9em; 
+  padding: 0.8rem 0;
+  font-size: 0.9em;
 }
+
 
 @media (max-width: 768px) {
-  main {
-    padding: 5px;
-  }
+    main {
+        padding: 5px;
+    }
 
-  #schedule-container,
-  #substitutions-container {
-    padding: 8px;
-    margin-bottom: 10px;
-  }
-
-    #schedule-container h2,
-  #substitutions-container h2 {
-        font-size: 1.1em;
-  }
+    #schedule-container,
+    #substitutions-container {
+        padding: 8px;
+        margin-bottom: 10px;
+    }
+      #schedule-container h2,
+      #substitutions-container h2 {
+            font-size: 1.1em;
+        }
 }
+
 
 #schedule-container table,
 #substitutions-container table {
   width: 100%;
   border-collapse: collapse; 
   margin-top: 10px; 
+  table-layout: fixed;
 }
 
 #schedule-container th,
 #substitutions-container th,
 #schedule-container td,
 #substitutions-container td {
-    border: 1px solid #ddd; 
-    padding: 5px; 
-    text-align: left; 
-    font-size: 0.8em; 
+  border: 1px solid #ddd;
+  padding: 5px;
+  text-align: left;
+  font-size: 0.8em;
+  word-break: break-word;
 }
 
 #schedule-container th,
 #substitutions-container th {
-  background-color: #f2f2f2; 
-  font-weight: bold; 
+  background-color: #f2f2f2;
+  font-weight: bold;
 }
 
 #schedule-container td,
 #substitutions-container td {
-  word-break: break-word; /* Zawijanie długich wyrazów */
+    word-break: break-word;
+    overflow-wrap: break-word; 
+}
+
+#schedule-container table,
+#substitutions-container table {
+    max-width: 100%;
 }
