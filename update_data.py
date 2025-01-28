@@ -15,17 +15,9 @@ def fetch_and_save_data():
         try:
             response = requests.get(url)
             response.raise_for_status()
-            
-            if filename == "substitutions.html":
-                response.encoding = 'iso-8859-2'
-                content = response.text.encode('iso-8859-2').decode('utf-8')
-            else:
-                 response.encoding = 'utf-8'    
-                 content = response.text
-            
+            response.encoding = 'utf-8'    
             with open(filename, "w", encoding="utf-8") as file:
-                file.write(content)
-
+                file.write(response.text)
             print(f"Successfully fetched and saved {filename} at {datetime.now()}")
         except requests.exceptions.RequestException as e:
             print(f"Failed to fetch {url}: {e}")
