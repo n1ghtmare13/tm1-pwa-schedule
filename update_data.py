@@ -48,9 +48,9 @@ def fetch_and_save_data():
                     tag.decompose()
 
                 # Remove entire <tr> containing table with class 'op'
-                footer_td = soup.find('td', class_='op')
-                if footer_td:
-                    parent_tr = footer_td.find_parent('tr')  # Znajdź rodzica <tr>
+                footer_elements = soup.find_all('td', class_='op')
+                for footer_td in footer_elements:
+                    parent_tr = footer_td.find_parent('tr')
                     if parent_tr:
                         parent_tr.extract()  # Całkowicie usuń <tr> z drzewa DOM
                     
