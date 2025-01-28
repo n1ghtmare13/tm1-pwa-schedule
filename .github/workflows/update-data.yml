@@ -32,4 +32,5 @@ jobs:
           git config --global user.name "GitHub Actions"
           git add .
           git commit -m "Automated update of schedule and substitutions" || echo "No changes to commit"
+          git remote set-url origin https://x-access-token:${{ secrets.ACTIONS_DEPLOY_KEY }}@github.com/${{ github.repository }}
           git push origin main
