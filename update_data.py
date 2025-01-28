@@ -48,8 +48,8 @@ def fetch_and_save_data():
                     tag.decompose()
 
                 # Remove entire <tr> containing table with class 'op'
-                footer_table = soup.find('table', class_='op')
-                if footer_table:
+                footer_td = soup.find('td', class_='op')
+                if footer_td:
                     parent_row = footer_table.find_parent('tr')  # Find parent <tr>
                     if parent_row:
                         parent_row.decompose()  # Remove the entire <tr>
