@@ -2,6 +2,8 @@ import requests
 from datetime import datetime
 import json
 import os
+import firebase_admin
+from firebase_admin import credentials, messaging
 
 def fetch_and_save_data():
     urls = {
@@ -19,36 +21,36 @@ def fetch_and_save_data():
         except requests.exceptions.RequestException as e:
             print(f"Failed to fetch {url}: {e}")
 
-
 def send_fcm_notification():
-    fcm_server_key = os.environ.get("FCM_SERVER_KEY")
-    fcm_sender_id = os.environ.get("FCM_SENDER_ID")
-
-    if not fcm_server_key or not fcm_sender_id:
-        print("FCM server key or sender ID not found in environment variables.")
-        return
-
-    headers = {
-        'Authorization': 'key=' + fcm_server_key,
-        'Content-Type': 'application/json'
-    }
-
-    message = {
-        "to": "/topics/all", # wysyła powiadomienie do wszystkich urządzeń
-        "notification": {
-            "title": "Nowe dane!",
-            "body": "Plan lekcji lub zastępstwa zostały zaktualizowane.",
-            "icon": "assets/icon.png",
-        }
-    }
-
     try:
-       response = requests.post("https://fcm.googleapis.com/fcm/send",
-                              data=json.dumps(message),
-                              headers=headers)
-       response.raise_for_status()
-       print(f"FCM notification sent successfully: {response.text}")
-    except requests.exceptions.RequestException as e:
+        # Pobierz klucz konta usługi z zmiennej środowiskowej
+        service_account_key_json = os.environ.get("FIREBASE_SERVICE_ACCOUNT_KEY")
+        if not service_account_key_json:
+            print("Firebase service account key not found in environment variables.")
+            return
+
+        # Parsuj dane json do słownika
+        service_account_key = json.loads(service_account_key_json)
+
+
+        # Zainicjuj Firebase Admin SDK
+        cred = credentials.Certificate(service_account_key)
+        firebase_admin.initialize_app(cred)
+
+        # Utwórz wiadomość FCM
+        message = messaging.Message(
+            notification=messaging.Notification(
+                title="Nowe dane!",
+                body="Plan lekcji lub zastępstwa zostały zaktualizowane.",
+                image="assets/icon.png",
+            ),
+            topic="all",
+        )
+
+        # Wyślij wiadomość
+        response = messaging.send(message)
+        print(f"FCM notification sent successfully: {response}")
+    except Exception as e:
         print(f"Failed to send FCM notification: {e}")
 
 
