@@ -42,20 +42,17 @@ def fetch_and_save_data():
                   footer.decompose()
                 text = soup.prettify()
 
-            else: #schedule.html
-                 # Usuń style
-                for style in soup.find_all('style'):
-                   style.decompose()
-                 # Usuń wszystkie skrypty
-                for script in soup.find_all('script'):
-                     script.decompose()
-                 # Usuń wszystkie linki
-                for link in soup.find_all('link'):
-                     link.decompose()
-                # Usuń stopkę z planem lekcji
-                footer = soup.find('table', class_='op')
-                if footer:
-                    footer.decompose()
+            elif filename == "schedule.html":
+                # Remove inline styles, scripts, and links
+                for tag in soup(['style', 'script', 'link']):
+                    tag.decompose()
+
+                # Remove entire <tr> containing table with class 'op'
+                footer_table = soup.find('table', class_='op')
+                if footer_table:
+                    parent_row = footer_table.find_parent('tr')  # Find parent <tr>
+                    if parent_row:
+                        parent_row.decompose()  # Remove the entire <tr>
                     
                 utf8_meta = soup.new_tag('meta', **{'http-equiv': 'Content-Type', 'content': 'text/html; charset=utf-8'})
                 soup.head.insert(0, utf8_meta)
