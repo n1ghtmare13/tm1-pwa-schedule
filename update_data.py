@@ -36,7 +36,33 @@ def fetch_and_save_data():
                 utf8_meta = soup.new_tag('meta', **{'http-equiv': 'Content-Type', 'content': 'text/html; charset=UTF-8'})
                 soup.head.insert(0, utf8_meta)
 
+                # Usuń stopkę
+                footer = soup.find('small')
+                if footer:
+                  footer.decompose()
+
                 text = soup.prettify()
+
+            else: #schedule.html
+                soup = BeautifulSoup(text, 'html.parser')
+                # Usuń style
+                for style in soup.find_all('style'):
+                   style.decompose()
+                 # Usuń wszystkie skrypty
+                for script in soup.find_all('script'):
+                     script.decompose()
+                 # Usuń wszystkie linki
+                for link in soup.find_all('link'):
+                     link.decompose()
+                 # Usuń stopkę
+                footer = soup.find('table', class_='op')
+                if footer:
+                     footer.decompose()
+                utf8_meta = soup.new_tag('meta', **{'http-equiv': 'Content-Type', 'content': 'text/html; charset=utf-8'})
+                soup.head.insert(0, utf8_meta)
+                text = soup.prettify()
+
+
 
             # Save files with proper encoding
             with open(filename, "w", encoding="utf-8") as file:
