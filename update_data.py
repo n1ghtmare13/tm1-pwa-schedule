@@ -1,7 +1,7 @@
 import requests
 from datetime import datetime
-import json
 import os
+import json
 import firebase_admin
 from firebase_admin import credentials, messaging
 from bs4 import BeautifulSoup
@@ -16,24 +16,29 @@ def fetch_and_save_data():
         try:
             response = requests.get(url)
             response.raise_for_status()
-            response.encoding = 'utf-8'
+            response.encoding = 'ISO-8859-2'
             text = response.text
 
             if filename == "substitutions.html":
-              soup = BeautifulSoup(text, 'html.parser')
-              # Usuwamy wszystkie meta tagi z content-type
-              for meta in soup.find_all('meta', attrs={'http-equiv': 'content-type'}):
-                meta.decompose()
-              # Dodajemy na początek sztuczny meta tag z UTF-8
-              text = f'<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />{soup.prettify()}'
+                soup = BeautifulSoup(text, 'html.parser')
+
+                # Remove existing meta tags with content-type
+                for meta in soup.find_all('meta', attrs={'http-equiv': 'Content-Type'}):
+                    meta.decompose()
+
+                # Add a UTF-8 meta tag at the top
+                utf8_meta = soup.new_tag('meta', **{'http-equiv': 'Content-Type', 'content': 'text/html; charset=UTF-8'})
+                soup.head.insert(0, utf8_meta)
+
+                text = soup.prettify()
 
             with open(filename, "w", encoding="utf-8") as file:
-               file.write(text)
+                file.write(text)
             print(f"Successfully fetched and saved {filename} at {datetime.now()}")
         except requests.exceptions.RequestException as e:
-             print(f"Failed to fetch {url}: {e}")
+            print(f"Failed to fetch {url}: {e}")
         except Exception as e:
-              print(f"An unexpected error occured {e}")
+            print(f"An unexpected error occurred: {e}")
 
 def send_fcm_notification():
     try:
@@ -60,7 +65,6 @@ def send_fcm_notification():
         print(f"FCM notification sent successfully: {response}")
     except Exception as e:
         print(f"Failed to send FCM notification: {e}")
-
 
 if __name__ == "__main__":
     fetch_and_save_data()
