@@ -11,7 +11,7 @@ def fetch_and_save_data():
         "substitutions.html": "https://zastepstwa.staff.edu.pl/"
     }
 
-for filename, url in urls.items():
+    for filename, url in urls.items():
         try:
             response = requests.get(url)
             response.raise_for_status()
