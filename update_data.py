@@ -16,7 +16,13 @@ def fetch_and_save_data():
         try:
             response = requests.get(url)
             response.raise_for_status()
-            response.encoding = 'ISO-8859-2'
+
+            # Detect encoding based on file
+            if filename == "substitutions.html":
+                response.encoding = 'ISO-8859-2'  # Explicitly set encoding for substitutions.html
+            else:
+                response.encoding = 'UTF-8'  # Default encoding for schedule.html
+
             text = response.text
 
             if filename == "substitutions.html":
@@ -32,6 +38,7 @@ def fetch_and_save_data():
 
                 text = soup.prettify()
 
+            # Save files with proper encoding
             with open(filename, "w", encoding="utf-8") as file:
                 file.write(text)
             print(f"Successfully fetched and saved {filename} at {datetime.now()}")
