@@ -12,6 +12,7 @@
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
       import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-analytics.js";
+      import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-messaging.js";
     
       const firebaseConfig = {
         apiKey: "AIzaSyAujO6hUv2-G18r132CqP4cvXpGhhOsXa8",
@@ -35,7 +36,7 @@
             const token = await getToken(messaging, { vapidKey: 'BKnj72KcT4emaQr974YdMv_AUOsbL5ONL4JdilJE5HyulNbw1L9ldP72HdkrN2ExarSeLhNsruDubVc5ZUq71NY' });
               if (token){
                   console.log('FCM registration token:', token);
-                  // Tutaj możesz wysłać token na swój serwer, aby móc go używać do wysyłania notyfikacji
+                  
               } else {
                 console.log('Failed to get token');
               }
@@ -49,7 +50,7 @@
 
       onMessage(messaging, (payload) => {
         console.log('Message received. ', payload);
-        // Customize notification here
+        
       });
 
       </script>
